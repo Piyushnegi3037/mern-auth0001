@@ -3,9 +3,6 @@ import { userModel } from "../models/userModel.js"
 import jwt from "jsonwebtoken"
 import transporter from "../config/nodemailer.js" 
 import { EMAIL_VERIFY_TEMPLATE, PASSWORD_RESET_TEMPLATE } from '../config/emailTemplate.js'
-
-const isProduction = process.env.NODE_ENV?.toLowerCase() === 'production';
-
 export const register= (async(req,res)=>{
     const {name, email, password} = req.body;
     if(!name || !email || !password){
@@ -24,8 +21,8 @@ export const register= (async(req,res)=>{
         const token= jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"7d"});
         res.cookie('token',token, {
             httpOnly:true,
-            secure:isProduction,
-            sameSite:isProduction?'none':'strict',
+            secure:process.env.NODE_ENV === 'PRODUCTION',
+            sameSite:process.env.NODE_ENV ==='PRODUCTION'?'none':'strict',
             maxAge:7*24*60*60*1000
         })
         const mailOptions={
@@ -60,8 +57,8 @@ export const login =async(req,res)=>{
         const token= jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"7d"});
         res.cookie('token',token, {
             httpOnly:true,
-            secure:isProduction,
-            sameSite:isProduction?'none':'strict',
+            secure:process.env.NODE_ENV === 'PRODUCTION',
+            sameSite:process.env.NODE_ENV ==='PRODUCTION'?'none':'strict',
             maxAge:7*24*60*60*1000
         })
         return res.json({success:true})
@@ -76,8 +73,8 @@ export const logout=async(req,res)=>{
     try{
         res.clearCookie('token',{
              httpOnly:true,
-             secure:isProduction,
-            sameSite:isProduction?'none':'strict',
+            secure:process.env.NODE_ENV === 'PRODUCTION',
+            sameSite:process.env.NODE_ENV ==='PRODUCTION'?'none':'strict',
         
 
         })
