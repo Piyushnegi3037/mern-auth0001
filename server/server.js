@@ -16,17 +16,23 @@ const allowedOrigins = new Set([
   process.env.FRONTEND_URL,
 ].filter(Boolean));
 
-const isAllowedOrigin = (origin) => {
+const isAllowedOrigin = (origin, callback) => {
   if (!origin || allowedOrigins.has(origin)) {
-    return true;
+    callback(null, origin);
+    return;
   }
 
   try {
     const { hostname } = new URL(origin);
-    return hostname.startsWith('project-00000-') && hostname.endsWith('-piyushnegi3037.vercel.app');
+    if (hostname.startsWith('project-00000-') && hostname.endsWith('-piyushnegi3037.vercel.app')) {
+      callback(null, origin);
+      return;
+    }
   } catch {
-    return false;
+    // Reject malformed origins below.
   }
+
+  callback(new Error('Origin not allowed by CORS'));
 };
 app.use(express.json());
 app.use(cookieParser());
