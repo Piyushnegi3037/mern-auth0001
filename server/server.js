@@ -13,8 +13,8 @@ const app= express();
 const allowedOrigins = [
     'http://localhost:5173',
     'https://project-00000.vercel.app',
+    'https://project-00000-6ll2qlnvo-piyushnegi3037.vercel.app',
     process.env.FRONTEND_URL,
-    /^https:\/\/project-00000(?:-[a-z0-9]+)?-piyushnegi3037\.vercel\.app$/,
 ].filter(Boolean);
 app.use(express.json());
 app.use(cookieParser());
