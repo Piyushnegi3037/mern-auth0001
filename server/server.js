@@ -10,13 +10,27 @@ import mongoose from "mongoose";
 
 const app= express();
 
-const allowedOrigins = [
-  'https://mern-auth0001-lppt.vercel.app', // Your Vercel frontend URL
-  'http://localhost:5173'                  // Your local development URL (if using Vite)
-];
+const allowedOrigins = new Set([
+  'http://localhost:5173',
+  'https://project-00000.vercel.app',
+  process.env.FRONTEND_URL,
+].filter(Boolean));
+
+const isAllowedOrigin = (origin) => {
+  if (!origin || allowedOrigins.has(origin)) {
+    return true;
+  }
+
+  try {
+    const { hostname } = new URL(origin);
+    return hostname.startsWith('project-00000-') && hostname.endsWith('-piyushnegi3037.vercel.app');
+  } catch {
+    return false;
+  }
+};
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: allowedOrigins, credentials: true }));
+app.use(cors({ origin: isAllowedOrigin, credentials: true }));
 const port=process.env.PORT || 8000;
 // API endpoints
 app.get('/',(req,res)=>{ res.send("Hello from server") })
