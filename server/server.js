@@ -10,7 +10,10 @@ import mongoose from "mongoose";
 
 const app= express();
 
-const allowedOrigins = ['http://localhost:5173'];
+const allowedOrigins = [
+  'https://mern-auth0001-lppt.vercel.app', // Your Vercel frontend URL
+  'http://localhost:5173'                  // Your local development URL (if using Vite)
+];
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({ origin: allowedOrigins, credentials: true }));
