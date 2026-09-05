@@ -10,33 +10,15 @@ import mongoose from "mongoose";
 
 const app= express();
 
-const allowedOrigins = new Set([
-  'http://localhost:5173',
-  'https://project-00000.vercel.app',
-  process.env.FRONTEND_URL,
-].filter(Boolean));
-
-const isAllowedOrigin = (origin, callback) => {
-  if (!origin || allowedOrigins.has(origin)) {
-    callback(null, origin);
-    return;
-  }
-
-  try {
-    const { hostname } = new URL(origin);
-    if (hostname.startsWith('project-00000-') && hostname.endsWith('-piyushnegi3037.vercel.app')) {
-      callback(null, origin);
-      return;
-    }
-  } catch {
-    // Reject malformed origins below.
-  }
-
-  callback(new Error('Origin not allowed by CORS'));
-};
+const allowedOrigins = [
+    'http://localhost:5173',
+    'https://project-00000.vercel.app',
+    process.env.FRONTEND_URL,
+    /^https:\/\/project-00000(?:-[a-z0-9]+)?-piyushnegi3037\.vercel\.app$/,
+].filter(Boolean);
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: isAllowedOrigin, credentials: true }));
+app.use(cors({ origin: allowedOrigins, credentials: true }));
 const port=process.env.PORT || 8000;
 // API endpoints
 app.get('/',(req,res)=>{ res.send("Hello from server") })
