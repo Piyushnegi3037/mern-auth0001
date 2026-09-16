@@ -41,11 +41,12 @@ export const AppContextProvider=(props)=>{
 
     const getUserData = async () => {
         try {
-            const { data } = axios.get('/api/user/data', {
+      const { data } = await axios.get('/api/user/data', {
   headers: {
     Authorization: `Bearer ${localStorage.getItem('token')}`
-  }
-}, { withCredentials: true })
+  },
+  withCredentials: true
+});
             if (data.success) {
                 setUserData(data.userData)
             } else {
