@@ -41,25 +41,36 @@ return res.json({success:true})
     }
 })
 export const login =async(req,res)=>{
+    
+    console.log("kkkk")
     const {email,password}=req.body;
     if(!email || !password){
         return res.json({success: false,message :'email and password are required'})
     }
+    console.log("kkkk")
     try{
         const user= await userModel.findOne({email})
+        
+    console.log("kkkk")
         if(!user){
+            
+    console.log("kkkk")
             return res.json({success:false,message:"User not found"})
         }
+        
+    console.log("kkkk")
         const isMatch= await bcrypt.compare(password,user.password)
         if(!isMatch){
+            
+    console.log("kkkk")
             return res.json({success:false,message:"Invalid credentials"})
         }
         const token= jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"7d"});
-
+console.log("hhhh")
         res.cookie('token',token, {
             httpOnly:true,
             secure: true,
-            sameSite:process.env.NODE_ENV=== 'none',
+            sameSite:'none',
             maxAge:7*24*60*60*1000
         })
         return res.json({success:true})

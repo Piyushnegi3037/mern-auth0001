@@ -29,7 +29,7 @@ app.use("/api/user",userRouter);
        await mongoose.connect(process.env.MONGODB_URI);
            console.log("Database connected successfully 1")
         
-        console.log("Database connected successfully")
+     
 app.listen(port,()=>{
     console.log(`Server is running on port ${port}`);
 } ) }
