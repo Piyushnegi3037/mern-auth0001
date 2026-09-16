@@ -8,8 +8,9 @@ import { useState } from 'react'
 
 const Navbar = () => {
   const navigate = useNavigate()
-  const [menuOpen, setMenuOpen] = useState(false);
   const { userData, backendUrl, setUserData, setIsLoggedin } = useContext(AppContent)
+    const [menuOpen, setMenuOpen] = useState(false);
+
   const sendVerificationOtp = async () => {
     try {
       axios.defaults.withCredentials = true;
@@ -41,57 +42,48 @@ const Navbar = () => {
    }
 
   return (
-    (<div className='absolute top-0 flex w-full items-center justify-between p-4 sm:p-6 sm:px-24'>
+    <div className='absolute top-0 flex w-full items-center justify-between p-4 sm:p-6 sm:px-24'>
       <img src={logo} alt='' className='w-28 sm:w-32' />
 
+      {/* Right side */}
       {userData ? (
-        <div className='group relative flex h-8 w-8 items-center justify-center rounded-full bg-black text-white'>
+        <div
+          className="relative flex h-8 w-8 items-center justify-center rounded-full bg-black text-white cursor-pointer"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
           {userData.name[0].toUpperCase()}
-          <div className='absolute w-20 h20 right-0 top-0 z-10 hidden rounded pt-10 text-black group-hover:block'>
-            <ul className='m-0 w-40  list-none bg-gray-100 p-2 text-sm'>
-              {!userData.isAccountVerified && (
-                <li onClick={sendVerificationOtp} className='cursor-pointer bg-gray-200 px-2 py-1'>verify email</li>
-              )}
-              <li onClick={logout} className='cursor-pointer bg-gray-200 px-2 py-1'>logout</li>
-            </ul>
-          </div>
+          {menuOpen && (
+            <div className="absolute right-0 top-0 z-10 w-40 rounded bg-gray-100 pt-10 text-black">
+              <ul className="list-none p-2 text-sm">
+                {!userData.isAccountVerified && (
+                  <li
+                    onClick={sendVerificationOtp}
+                    className="cursor-pointer bg-gray-200 px-2 py-1"
+                  >
+                    verify email
+                  </li>
+                )}
+                <li
+                  onClick={logout}
+                  className="cursor-pointer bg-gray-200 px-2 py-1"
+                >
+                  logout
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
       ) : (
-        <button onClick={() => navigate('/login')} type='button' className='rounded-full border border-gray-500 px-6 py-2 text-gray-800 transition-all hover:bg-gray-100'>
+        <button
+          onClick={() => navigate("/login")}
+          type="button"
+          className="rounded-full border border-gray-500 px-6 py-2 text-gray-800 transition-all hover:bg-gray-100"
+        >
           Login
         </button>
       )}
     </div>
-// when i open it my mobile hover functonalyy not working i acant sse my logout or verfify email button
- 
-      ))}
-
-//     <div className='absolute top-0 flex w-full items-center justify-between p-4 sm:p-6 sm:px-24'>
-//       <img src={logo} alt='' className='w-28 sm:w-32' />
-
-// {userData?(
-// <div 
-//   className="relative flex h-8 w-8 items-center justify-center rounded-full bg-black text-white"
-//   onClick={() => setMenuOpen(!menuOpen)}
-// >
-//   {userData.name[0].toUpperCase()}
-//   {menuOpen && (
-//     <div className="absolute right-0 top-0 z-10 w-40 rounded bg-gray-100 pt-10 text-black">
-//       <ul className="list-none p-2 text-sm">
-//         {!userData.isAccountVerified && (
-//           <li onClick={sendVerificationOtp} className="cursor-pointer bg-gray-200 px-2 py-1">verify email</li>
-//         )}
-//         <li onClick={logout} className="cursor-pointer bg-gray-200 px-2 py-1">logout</li>
-//       </ul>
-//     </div>
-//   )}
-// </div>):(
-//         <button onClick={() => navigate('/login')} type='button' className='rounded-full border border-gray-500 px-6 py-2 text-gray-800 transition-all hover:bg-gray-100'>
-//           Login
-//         </button>
-//       )}
-      
-//     </div>
-
+  )
+}
 
 export default Navbar
