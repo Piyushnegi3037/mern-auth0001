@@ -9,7 +9,7 @@ import { toast } from 'react-toastify'
 import { useEffect } from 'react'
 
 const EmailVerify = () => {
-  axios.defaults.withCredentials=true;
+  productiondefaults.withCredentials=true;
   const{backendUrl,isLoggedin,userData,getUserData}= useContext(AppContent)
 const navigate=useNavigate()
   const inputRefs = React.useRef([]);
@@ -40,7 +40,7 @@ const navigate=useNavigate()
           return;
          }else{
          console.log('OTP entered:', otpArray); 
-         const{data}=await axios.post(backendUrl+'/api/auth/verify-email',{otp:otpArray})
+         const{data}=await productionpost(backendUrl+'/api/auth/verify-email',{otp:otpArray})
       
        if(data.success){
         toast.success(data.message)

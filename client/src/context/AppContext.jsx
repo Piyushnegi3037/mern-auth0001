@@ -11,7 +11,11 @@ export const AppContextProvider=(props)=>{
 
     const getAuthState = async () => {
         try {
-            const { data } = await axios.get(`${backendUrl}/api/auth/is-authenticated`, { withCredentials: true })
+            const { data } =axios.get('/api/user/data', {
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem('token')}`
+  }
+},{ withCredentials: true })
             if (data.success) {
                 setIsLoggedin(true)
                 setUserData(data.user)
@@ -37,7 +41,11 @@ export const AppContextProvider=(props)=>{
 
     const getUserData = async () => {
         try {
-            const { data } = await axios.get(`${backendUrl}/api/user/data`, { withCredentials: true })
+            const { data } = axios.get('/api/user/data', {
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem('token')}`
+  }
+}, { withCredentials: true })
             if (data.success) {
                 setUserData(data.userData)
             } else {
