@@ -30,6 +30,7 @@ app.use("/api/user",userRouter);
            console.log("Database connected successfully 1")
         
      
+           
 app.listen(port,()=>{
     console.log(`Server is running on port ${port}`);
 } ) }
