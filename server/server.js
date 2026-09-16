@@ -18,7 +18,7 @@ const allowedOrigins = [
 ].filter(Boolean);
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: allowedOrigins, credentials: true }));
+app.use(cors({ origin:"https://mern-auth0001.onrender.com", credentials: true }));
 const port=process.env.PORT || 8000;
 // API endpoints
 app.get('/',(req,res)=>{ res.send("Hello from server") })
@@ -30,7 +30,7 @@ app.use("/api/user",userRouter);
            console.log("Database connected successfully 1")
         
      
-           
+
 app.listen(port,()=>{
     console.log(`Server is running on port ${port}`);
 } ) }
