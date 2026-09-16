@@ -18,7 +18,7 @@ const allowedOrigins = [
 ].filter(Boolean);
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin:"https://mern-auth0001.onrender.com", credentials: true }));
+app.use(cors({ origin:"https://mern-auth000111.vercel.app", credentials: true }));
 const port=process.env.PORT || 8000;
 // API endpoints
 app.get('/',(req,res)=>{ res.send("Hello from server") })
