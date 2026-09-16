@@ -147,6 +147,14 @@ return res.json({success:true,message:"email verified successfully"})
 
 }
 export const isAuthenticated= async(req,res)=> {
+    const token= req.cookies?.token;
+      if (!token) {
+        return res.json({
+            success: true,
+            isAuthenticated: false,
+            user: null
+        });
+    }
     try{
         if(!req.user?.id){
             return res.status(401).json({success:false,message:"Unauthorized access"})
